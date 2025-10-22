@@ -28,6 +28,11 @@ class HomePage extends StatelessWidget {
         description: '展示拖动图片控制灰化比例示例',
         routeName: AppRoutes.dragGrayImage,
       ),
+      ExampleItem(
+        title: 'Diagonal Gray Compare',
+        description: '展示对角线分割图片控制灰化比例示例',
+        routeName: AppRoutes.ratioDiagonalGrayCompare,
+      ),
     ];
 
     return Scaffold(
@@ -106,6 +111,9 @@ class _ExampleCardState extends State<ExampleCard>
       ] else if (widget.example.title.contains('Drag Gray')) ...[
         Colors.grey.withOpacity(0.7),
         Colors.blueGrey.withOpacity(0.7),
+      ] else if (widget.example.title.contains('Diagonal')) ...[
+        Colors.orange.withOpacity(0.7),
+        Colors.deepOrange.withOpacity(0.7),
       ] else ...[
         Colors.teal.withOpacity(0.7),
         Colors.blue.withOpacity(0.7),
@@ -169,7 +177,9 @@ class _ExampleCardState extends State<ExampleCard>
                             ? Icons.linear_scale
                             : widget.example.title.contains('Drag Gray')
                               ? Icons.image_outlined
-                              : Icons.touch_app,
+                              : widget.example.title.contains('Diagonal')
+                                ? Icons.compare_outlined
+                                : Icons.touch_app,
                         color: Colors.white,
                         size: 28,
                       ),
