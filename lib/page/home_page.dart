@@ -23,6 +23,11 @@ class HomePage extends StatelessWidget {
         description: '展示自定义滑动条示例',
         routeName: AppRoutes.seekBar,
       ),
+      ExampleItem(
+        title: 'Drag Gray Image',
+        description: '展示拖动图片控制灰化比例示例',
+        routeName: AppRoutes.dragGrayImage,
+      ),
     ];
 
     return Scaffold(
@@ -98,6 +103,9 @@ class _ExampleCardState extends State<ExampleCard>
       ] else if (widget.example.title.contains('Gradient')) ...[
         Colors.deepPurpleAccent.withOpacity(0.7),
         Colors.pinkAccent.withOpacity(0.7),
+      ] else if (widget.example.title.contains('Drag Gray')) ...[
+        Colors.grey.withOpacity(0.7),
+        Colors.blueGrey.withOpacity(0.7),
       ] else ...[
         Colors.teal.withOpacity(0.7),
         Colors.blue.withOpacity(0.7),
@@ -159,7 +167,9 @@ class _ExampleCardState extends State<ExampleCard>
                           ? Icons.auto_awesome_outlined
                           : widget.example.title.contains('Gradient')
                             ? Icons.linear_scale
-                            : Icons.touch_app,
+                            : widget.example.title.contains('Drag Gray')
+                              ? Icons.image_outlined
+                              : Icons.touch_app,
                         color: Colors.white,
                         size: 28,
                       ),

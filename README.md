@@ -1,6 +1,6 @@
 # Widget Simple
 
-一个展示多种自定义 Flutter 组件的示例项目，包括动态贝塞尔曲线动画、渐变进度条和自定义滑动条。
+一个展示多种自定义 Flutter 组件的示例项目，包括动态贝塞尔曲线动画、渐变进度条、自定义滑动条和图片灰度对比组件。
 
 ## 项目结构
 
@@ -9,6 +9,7 @@ lib/
 ├── main.dart                  # 应用入口点
 ├── page/
 │   ├── animated_bezier_curve_examples.dart  # 贝塞尔曲线动画示例页面
+│   ├── drag_gray_image_example.dart         # 图片灰度对比示例页面
 │   ├── gradient_progress_example.dart       # 渐变进度条示例页面
 │   ├── home_page.dart                      # 主页，展示所有示例的导航入口
 │   └── seek_bar_example.dart               # 滑动条示例页面
@@ -54,6 +55,17 @@ lib/
 - 支持拖拽和点击交互
 - 使用 `CustomPainter` 实现自定义绘制
 
+### 4. 图片灰度对比 (Drag Gray Image)
+
+位于 `lib/page/drag_gray_image_example.dart` 的 `DragGrayImageCompare` 组件展示了一个可交互的图片灰度对比功能，用户可以通过拖动分割线来控制图片的灰化比例。
+
+特性：
+- 使用 `GestureDetector` 处理水平拖动事件
+- 通过 `ColorFiltered` 和颜色矩阵实现图片灰度效果
+- 使用 `Stack` 布局实现图层叠加效果
+- 包含可拖动的分割线和手柄
+- 通过 `AspectRatio` 保持图片显示比例
+
 ## 路由配置
 
 项目使用 `go_router` 进行路由管理，配置文件位于 `lib/router/router_config.dart`。
@@ -63,6 +75,7 @@ lib/
 - `/animated_bezier_curve` - 贝塞尔曲线动画示例页面
 - `/gradient_progress` - 渐变进度条示例页面
 - `/seek_bar` - 滑动条示例页面
+- `/drag-gray-image` - 图片灰度对比示例页面
 
 ## 依赖项
 

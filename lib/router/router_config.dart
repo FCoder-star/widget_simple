@@ -4,6 +4,7 @@ import 'package:widget_simple/page/animated_bezier_curve_examples.dart';
 import 'package:widget_simple/page/gradient_progress_example.dart';
 import 'package:widget_simple/page/seek_bar_example.dart';
 import 'package:widget_simple/page/home_page.dart';
+import 'package:widget_simple/page/drag_gray_image_example.dart';
 
 // 定义路由名称常量
 class AppRoutes {
@@ -11,6 +12,7 @@ class AppRoutes {
   static const String animatedBezierCurve = '/animated-bezier-curve';
   static const String gradientProgress = '/gradient-progress';
   static const String seekBar = '/seek-bar';
+  static const String dragGrayImage = '/drag-gray-image';
 }
 
 // 路由配置
@@ -42,6 +44,13 @@ final GoRouter routerConfig = GoRouter(
       name: AppRoutes.seekBar,
       builder: (BuildContext context, GoRouterState state) {
         return const SeekBarExample();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.dragGrayImage,
+      name: AppRoutes.dragGrayImage,
+      builder: (BuildContext context, GoRouterState state) {
+        return const DragGrayImageCompare();
       },
     ),
   ],
