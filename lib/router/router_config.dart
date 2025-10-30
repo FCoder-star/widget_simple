@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_simple/page/animated_bezier_curve_examples.dart';
+import 'package:widget_simple/page/glass_example.dart';
+import 'package:widget_simple/page/glass_example/clock.dart';
 import 'package:widget_simple/page/gradient_progress_example.dart';
 import 'package:widget_simple/page/seek_bar_example.dart';
 import 'package:widget_simple/page/home_page.dart';
@@ -15,6 +17,7 @@ class AppRoutes {
   static const String seekBar = '/seek-bar';
   static const String dragGrayImage = '/drag-gray-image';
   static const String ratioDiagonalGrayCompare = '/ratio-diagonal-gray-compare';
+  static const String glassExample = '/glass-example';
 }
 
 // 路由配置
@@ -60,6 +63,13 @@ final GoRouter routerConfig = GoRouter(
       name: AppRoutes.ratioDiagonalGrayCompare,
       builder: (BuildContext context, GoRouterState state) {
         return const SlantedSplitImage();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.glassExample,
+      name: AppRoutes.glassExample,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ClockExample();
       },
     ),
   ],

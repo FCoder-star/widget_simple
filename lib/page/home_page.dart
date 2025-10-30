@@ -33,6 +33,11 @@ class HomePage extends StatelessWidget {
         description: '展示对角线分割图片控制灰化比例示例',
         routeName: AppRoutes.ratioDiagonalGrayCompare,
       ),
+      ExampleItem(
+        title: 'GlassExample',
+        description: '展示液态玻璃效果',
+        routeName: AppRoutes.glassExample,
+      ),
     ];
 
     return Scaffold(
