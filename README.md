@@ -79,6 +79,17 @@ lib/
 - 通过自定义 `CustomClipper` 实现对角线裁剪效果
 - 通过 `AspectRatio` 保持图片显示比例
 
+### 6. ScrollView Observer (滚动视图观察器)
+
+位于 `lib/page/scrollview_example.dart` 的 `ScrollViewExample` 组件展示了 `flutter_scrollview_observer` 框架的各种能力，包括监听滚动视图中正在显示的子部件、滚动到指定位置以及聊天会话等场景。
+
+特性：
+- 使用 `ListObserverController` 监听滚动视图中正在显示的子部件
+- 实现滚动到指定索引位置的功能
+- 支持聊天会话场景，保持消息位置
+- 包含基础监听、滚动到指定位置、聊天会话等多个示例
+- 使用 `TabBar` 和 `TabBarView` 组织不同功能的展示
+
 ## 路由配置
 
 项目使用 `go_router` 进行路由管理，配置文件位于 `lib/router/router_config.dart`。
@@ -90,6 +101,7 @@ lib/
 - `/seek-bar` - 滑动条示例页面
 - `/drag-gray-image` - 图片灰度对比示例页面
 - `/ratio-diagonal-gray-compare` - 对角线分割图片灰度对比示例页面
+- `/scroll-view-example` - ScrollView Observer示例页面
 
 ## 依赖项
 

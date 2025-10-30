@@ -19,9 +19,11 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    packaging {
-        resources.excludes.add("lib/x86/**")
-        resources.excludes.add("lib/x86_64/**")
+    packagingOptions {
+        excludes += setOf(
+            "lib/x86/**",
+            "lib/x86_64/**"
+        )
     }
 
     defaultConfig {
@@ -54,6 +56,10 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
+//            ndk{
+//                abiFilters.clear()
+//                abiFilters.add("arm64-v8a")
+//            }
 
         }
 
