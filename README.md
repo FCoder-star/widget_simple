@@ -33,6 +33,8 @@ lib/
 │       ├── shared.dart
 │       ├── main.dart
 │       └── widgets/
+├── slide_verify/
+│       └── slide_verify_page.dart
 assets/
 └── image/
     ├── glass/                     # 液态玻璃示例资源
@@ -52,6 +54,7 @@ assets/
 - 图片灰度对比：`lib/page/drag_gray_image/drag_gray_image_example.dart`
 - 对角线灰度对比：`lib/page/gradient_progress_2/ratio_diagonal_gray_compare_example.dart`
 - 液态玻璃示例：`lib/page/glass_example/*`（基于 `liquid_glass_renderer`）
+- 滑动验证：`lib/page/slide_verify/slide_verify_page.dart`
 
 ## 依赖与环境
 

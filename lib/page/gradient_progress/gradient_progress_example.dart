@@ -17,11 +17,12 @@ class _GradientProgressExampleState extends State<GradientProgressExample> {
   int currentTime = 0;
 
   int totalTimes = 10;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       currentTime++;
 
       // 处理进度超过100%的情况
@@ -30,8 +31,16 @@ class _GradientProgressExampleState extends State<GradientProgressExample> {
         progress = progress % 1.0; // 循环显示进度
       }
 
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
