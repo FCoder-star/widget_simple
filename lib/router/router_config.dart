@@ -1,13 +1,13 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import 'package:widget_simple/page/animated_bezier_curve_examples.dart';
-import 'package:widget_simple/page/glass_example.dart';
+import 'package:widget_simple/page/bezier_curve/animated_bezier_curve_examples.dart';
+import 'package:widget_simple/page/glass_example/glass_example.dart';
 import 'package:widget_simple/page/glass_example/clock.dart';
-import 'package:widget_simple/page/gradient_progress_example.dart';
-import 'package:widget_simple/page/seek_bar_example.dart';
+import 'package:widget_simple/page/gradient_progress/gradient_progress_example.dart';
+import 'package:widget_simple/page/seek_bar/seek_bar_example.dart';
 import 'package:widget_simple/page/home_page.dart';
-import 'package:widget_simple/page/drag_gray_image_example.dart';
-import 'package:widget_simple/page/ratio_diagonal_gray_compare_example.dart';
+import 'package:widget_simple/page/drag_gray_image/drag_gray_image_example.dart';
+import 'package:widget_simple/page/gradient_progress_2/ratio_diagonal_gray_compare_example.dart';
 
 // 定义路由名称常量
 class AppRoutes {
