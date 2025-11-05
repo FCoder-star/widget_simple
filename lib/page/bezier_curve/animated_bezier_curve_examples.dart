@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widget_simple/widgets/animated_bezier_curve.dart';
+import 'package:widget_simple/page/bezier_curve/animated_bezier_curve.dart';
 
 class AnimatedBezierCurveExamples extends StatefulWidget {
   const AnimatedBezierCurveExamples({super.key});
@@ -12,7 +12,7 @@ class AnimatedBezierCurveExamples extends StatefulWidget {
 class _AnimatedBezierCurveExamplesState
     extends State<AnimatedBezierCurveExamples> {
   bool _isPlaying = false;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,11 +21,7 @@ class _AnimatedBezierCurveExamplesState
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0f0c29),
-              Color(0xFF302b63),
-              Color(0xFF24243e),
-            ],
+            colors: [Color(0xFF0f0c29), Color(0xFF302b63), Color(0xFF24243e)],
           ),
         ),
         child: Column(
@@ -63,10 +59,7 @@ class _AnimatedBezierCurveExamplesState
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Text(
                 '动态贝塞尔曲线动画演示',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.white70),
                 textAlign: TextAlign.center,
               ),
             ),

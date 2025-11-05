@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:widget_simple/widgets/gradient_progress_label.dart';
+import 'package:widget_simple/page/gradient_progress/gradient_progress_label.dart';
 
 class GradientProgressExample extends StatefulWidget {
   const GradientProgressExample({super.key});
@@ -17,11 +17,12 @@ class _GradientProgressExampleState extends State<GradientProgressExample> {
   int currentTime = 0;
 
   int totalTimes = 10;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       currentTime++;
 
       // 处理进度超过100%的情况
@@ -29,9 +30,17 @@ class _GradientProgressExampleState extends State<GradientProgressExample> {
       if (progress > 1.0) {
         progress = progress % 1.0; // 循环显示进度
       }
-      
-      setState(() {});
+
+      if (mounted) {
+        setState(() {});
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -42,11 +51,7 @@ class _GradientProgressExampleState extends State<GradientProgressExample> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0f0c29),
-              Color(0xFF302b63),
-              Color(0xFF24243e),
-            ],
+            colors: [Color(0xFF0f0c29), Color(0xFF302b63), Color(0xFF24243e)],
           ),
         ),
         child: Column(
@@ -84,10 +89,7 @@ class _GradientProgressExampleState extends State<GradientProgressExample> {
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Text(
                 '渐变进度条演示',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.white70),
                 textAlign: TextAlign.center,
               ),
             ),

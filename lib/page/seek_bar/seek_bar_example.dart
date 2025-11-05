@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widget_simple/widgets/seek_bar_widget.dart';
+import 'package:widget_simple/page/seek_bar/seek_bar_widget.dart';
 
 class SeekBarExample extends StatefulWidget {
   const SeekBarExample({super.key});
@@ -19,11 +19,7 @@ class _SeekBarExampleState extends State<SeekBarExample> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0f0c29),
-              Color(0xFF302b63),
-              Color(0xFF24243e),
-            ],
+            colors: [Color(0xFF0f0c29), Color(0xFF302b63), Color(0xFF24243e)],
           ),
         ),
         child: Column(
@@ -61,10 +57,7 @@ class _SeekBarExampleState extends State<SeekBarExample> {
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Text(
                 '自定义滑动条演示',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.white70),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -88,8 +81,10 @@ class _SeekBarExampleState extends State<SeekBarExample> {
                           // 渐变条：柔和蓝紫到深蓝，带一点光泽感
                           gradientStartColor: const Color(0xFF6B7BCD), // 柔和蓝
                           gradientEndColor: const Color(0xFF2B3A88), // 深海蓝
-                          leftIconAsset: "assets/image/low_brightness_light.webp",
-                          rightIconAsset: "assets/image/high_brightness_light.webp",
+                          leftIconAsset:
+                              "assets/image/low_brightness_light.webp",
+                          rightIconAsset:
+                              "assets/image/high_brightness_light.webp",
                           iconSize: 18,
                           iconPadding: 12,
                           drawIcons: true,
@@ -176,15 +171,16 @@ class _SeekBarExampleState extends State<SeekBarExample> {
     );
   }
 
-  Widget _buildSeekBarExample(BuildContext context, String title, Widget seekBar) {
+  Widget _buildSeekBarExample(
+    BuildContext context,
+    String title,
+    Widget seekBar,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.2),
-          width: 1,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

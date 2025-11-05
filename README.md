@@ -1,116 +1,83 @@
 # Widget Simple
 
-一个展示多种自定义 Flutter 组件的示例项目，包括动态贝塞尔曲线动画、渐变进度条、自定义滑动条、图片灰度对比和对角线分割图片灰度对比组件。
+一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果：动态贝塞尔曲线、渐变进度、滑动条、图片灰度对比，以及液态玻璃等。
 
-## 项目结构
+## 目录结构（更新版）
 
 ```
 lib/
-├── main.dart                  # 应用入口点
-├── page/
-│   ├── animated_bezier_curve_examples.dart  # 贝塞尔曲线动画示例页面
-│   ├── drag_gray_image_example.dart         # 图片灰度对比示例页面
-│   ├── gradient_progress_example.dart       # 渐变进度条示例页面
-│   ├── home_page.dart                      # 主页，展示所有示例的导航入口
-│   ├── ratio_diagonal_gray_compare_example.dart  # 对角线分割图片灰度对比示例页面
-│   └── seek_bar_example.dart               # 滑动条示例页面
+├── main.dart                      # 应用入口
 ├── router/
-│   └── router_config.dart                  # 路由配置
-└── widgets/
-    ├── animated_bezier_curve.dart          # 动态贝塞尔曲线动画组件
-    ├── gradient_progress_label.dart        # 渐变进度条组件
-    └── seek_bar_widget.dart                # 自定义滑动条组件
+│   └── router_config.dart         # 基于 go_router 的路由配置
+├── page/
+│   ├── home_page.dart             # 主页与示例导航
+│   ├── bezier_curve/
+│   │   ├── animated_bezier_curve.dart
+│   │   └── animated_bezier_curve_examples.dart
+│   ├── gradient_progress/
+│   │   ├── gradient_progress_label.dart
+│   │   └── gradient_progress_example.dart
+│   ├── gradient_progress_2/
+│   │   └── ratio_diagonal_gray_compare_example.dart
+│   ├── seek_bar/
+│   │   ├── seek_bar_widget.dart
+│   │   └── seek_bar_example.dart
+│   ├── drag_gray_image/
+│   │   └── drag_gray_image_example.dart
+│   └── glass_example/
+│       ├── glass_example.dart
+│       ├── basic_app.dart
+│       ├── clock.dart
+│       ├── grid.dart
+│       ├── shapes.dart
+│       ├── shared.dart
+│       ├── main.dart
+│       └── widgets/
+├── slide_verify/
+│       └── slide_verify_page.dart
+assets/
+└── image/
+    ├── glass/                     # 液态玻璃示例资源
+    ├── high_brightness_light.webp
+    ├── low_brightness_light.webp
+    ├── pause.webp
+    ├── play.webp
+    ├── question.webp
+    └── streams.webp
 ```
 
-## 功能介绍
+## 模块与示例
 
-### 1. 动态贝塞尔曲线动画 (Animated Bezier Curve)
+- 动态贝塞尔曲线：`lib/page/bezier_curve/animated_bezier_curve(.dart|_examples.dart)`
+- 渐变进度条：`lib/page/gradient_progress/gradient_progress_label.dart`
+- 自定义滑动条：`lib/page/seek_bar/seek_bar_widget.dart`
+- 图片灰度对比：`lib/page/drag_gray_image/drag_gray_image_example.dart`
+- 对角线灰度对比：`lib/page/gradient_progress_2/ratio_diagonal_gray_compare_example.dart`
+- 液态玻璃示例：`lib/page/glass_example/*`（基于 `liquid_glass_renderer`）
+- 滑动验证：`lib/page/slide_verify/slide_verify_page.dart`
 
-位于 `lib/widgets/animated_bezier_curve.dart` 的 `AnimatedBezierCurve` 组件展示了一个动态变化的贝塞尔曲线动画。该动画通过随机生成控制点并平滑过渡来创建流动的视觉效果。
+## 依赖与环境
 
-特性：
-- 使用 `CustomPainter` 实现自定义绘制
-- 通过 `AnimationController` 控制动画播放/暂停
-- 支持自定义控制点数量
-- 中心有一个播放/暂停按钮控制动画状态
-
-### 2. 渐变进度条 (Gradient Progress)
-
-位于 `lib/widgets/gradient_progress_label.dart` 的 `GradientProgressLabel` 组件展示了一个带有渐变效果的进度条，可以包含文本和图标。
-
-特性：
-- 支持自定义渐变颜色
-- 可以在进度条上显示文本和图标
-- 支持前景色和背景色分别设置
-- 可以通过进度值控制渐变区域的大小
-- 支持点击事件
-
-### 3. 自定义滑动条 (Seek Bar)
-
-位于 `lib/widgets/seek_bar_widget.dart` 的 `SeekBarWidget` 组件是一个高度可定制的滑动条，支持多种样式和交互方式。
-
-特性：
-- 支持自定义高度、颜色、边框等外观属性
-- 可以显示左右图标
-- 支持自定义滑块大小和颜色
-- 支持拖拽和点击交互
-- 使用 `CustomPainter` 实现自定义绘制
-
-### 4. 图片灰度对比 (Drag Gray Image)
-
-位于 `lib/page/drag_gray_image_example.dart` 的 `DragGrayImageCompare` 组件展示了一个可交互的图片灰度对比功能，用户可以通过拖动分割线来控制图片的灰化比例。
-
-特性：
-- 使用 `GestureDetector` 处理水平拖动事件
-- 通过 `ColorFiltered` 和颜色矩阵实现图片灰度效果
-- 使用 `Stack` 布局实现图层叠加效果
-- 包含可拖动的分割线和手柄
-- 通过 `AspectRatio` 保持图片显示比例
-
-### 5. 对角线分割图片灰度对比 (Diagonal Gray Compare)
-
-位于 `lib/page/ratio_diagonal_gray_compare_example.dart` 的 `RatioDiagonalGrayCompare` 组件展示了一个可交互的图片灰度对比功能，用户可以通过拖动对角线分割线来控制图片的灰化比例。
-
-特性：
-- 使用 `GestureDetector` 处理水平拖动事件
-- 通过 `ColorFiltered` 和颜色矩阵实现图片灰度效果
-- 使用 `Stack` 布局实现图层叠加效果
-- 包含可拖动的对角线分割线和手柄
-- 通过自定义 `CustomClipper` 实现对角线裁剪效果
-- 通过 `AspectRatio` 保持图片显示比例
-
-### 6. ScrollView Observer (滚动视图观察器)
-
-位于 `lib/page/scrollview_example.dart` 的 `ScrollViewExample` 组件展示了 `flutter_scrollview_observer` 框架的各种能力，包括监听滚动视图中正在显示的子部件、滚动到指定位置以及聊天会话等场景。
-
-特性：
-- 使用 `ListObserverController` 监听滚动视图中正在显示的子部件
-- 实现滚动到指定索引位置的功能
-- 支持聊天会话场景，保持消息位置
-- 包含基础监听、滚动到指定位置、聊天会话等多个示例
-- 使用 `TabBar` 和 `TabBarView` 组织不同功能的展示
-
-## 路由配置
-
-项目使用 `go_router` 进行路由管理，配置文件位于 `lib/router/router_config.dart`。
-
-路由包括：
-- `/` - 主页 (`HomePage`)
-- `/animated-bezier-curve` - 贝塞尔曲线动画示例页面
-- `/gradient-progress` - 渐变进度条示例页面
-- `/seek-bar` - 滑动条示例页面
-- `/drag-gray-image` - 图片灰度对比示例页面
-- `/ratio-diagonal-gray-compare` - 对角线分割图片灰度对比示例页面
-- `/scroll-view-example` - ScrollView Observer示例页面
-
-## 依赖项
+项目使用的关键依赖（来自 `pubspec.yaml`）：
 
 ```yaml
+environment:
+  sdk: ^3.9.2
+
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
   go_router: ^14.0.0
+  liquid_glass_renderer: ^0.1.1-dev.26
+  flex_color_picker: ^3.7.1
+  flutter_hooks: ^0.21.2
+  heroine: ^0.5.0-dev.6
+  rivership: ^0.3.0-dev.6
+  smooth_sheets: ^0.12.0
+  motor: ^1.0.0-dev.3
+  google_fonts: ^6.2.1
+  stupid_simple_sheet: ^0.5.0
 
 dev_dependencies:
   flutter_test:
@@ -118,10 +85,36 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 ```
 
-## 使用说明
+建议使用 Flutter 3.24+ 与 Dart 3.9 以获得最佳兼容性。
 
-1. 克隆项目到本地
-2. 运行 `flutter pub get` 安装依赖
-3. 运行 `flutter run` 启动应用
+## 快速开始
 
-在主页中，您可以点击不同的卡片导航到相应的示例页面，查看各个组件的效果和用法。
+1. 安装依赖：`flutter pub get`
+2. 启动应用：`flutter run`
+3. Web 运行（可选）：`flutter run -d chrome`
+
+## 在 Android 模拟器上运行
+
+1. 查看可用模拟器：`flutter emulators`
+2. 启动模拟器：`flutter emulators --launch <emulator_id>`
+3. 查看设备列表：`flutter devices`
+4. 运行到指定设备：`flutter run -d <device_id>`
+
+常见问题：
+- 若模拟器启动失败（退出码 1），尝试更新 Android Studio 和 AVD，启用硬件加速（HVF/AMDuV），或新建一个 AVD。
+- Apple Silicon 建议使用 API 33+ 的 arm64 系统镜像。
+
+## 路由
+
+基于 `go_router` 的集中路由在 `lib/router/router_config.dart` 中维护，主页 `HomePage` 提供到各示例页的导航入口。
+
+## 开发与质量
+
+- 代码规范：`analysis_options.yaml`（`flutter_lints`）
+- 静态分析：`dart analyze`
+- 单元测试：`flutter test`
+- 构建 Android 包：`flutter build apk`
+
+## 许可
+
+本项目仅用于学习与示例展示用途；如需商用请根据实际依赖库的许可条款评估。

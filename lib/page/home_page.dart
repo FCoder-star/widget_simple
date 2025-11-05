@@ -38,6 +38,21 @@ class HomePage extends StatelessWidget {
         description: '展示液态玻璃效果',
         routeName: AppRoutes.glassExample,
       ),
+      ExampleItem(
+        title: 'Slide Verify',
+        description: '展示滑动验证组件示例',
+        routeName: AppRoutes.slideVerify,
+      ),
+      ExampleItem(
+        title: 'ClipPath Example',
+        description: '展示 Path 裁剪与基本 API 用法',
+        routeName: AppRoutes.clipPath,
+      ),
+      ExampleItem(
+        title: 'Slanted Progress Indicator',
+        description: '展示斜纹背景可点击进度条',
+        routeName: AppRoutes.slantedProgressIndicator,
+      ),
     ];
 
     return Scaffold(
@@ -119,6 +134,15 @@ class _ExampleCardState extends State<ExampleCard>
       ] else if (widget.example.title.contains('Diagonal')) ...[
         Colors.orange.withOpacity(0.7),
         Colors.deepOrange.withOpacity(0.7),
+      ] else if (widget.example.title.contains('Slide Verify')) ...[
+        const Color(0xFF2C3E50).withOpacity(0.8), // 深蓝灰色
+        const Color(0xFF3498DB).withOpacity(0.8), // 现代蓝色
+      ] else if (widget.example.title.contains('ClipPath')) ...[
+        Colors.purple.withOpacity(0.7),
+        Colors.deepPurple.withOpacity(0.7),
+      ] else if (widget.example.title.contains('Slanted Progress')) ...[
+        Colors.indigo.withOpacity(0.7),
+        Colors.blueAccent.withOpacity(0.7),
       ] else ...[
         Colors.teal.withOpacity(0.7),
         Colors.blue.withOpacity(0.7),
@@ -184,7 +208,13 @@ class _ExampleCardState extends State<ExampleCard>
                               ? Icons.image_outlined
                               : widget.example.title.contains('Diagonal')
                                 ? Icons.compare_outlined
-                                : Icons.touch_app,
+                              : widget.example.title.contains('Slide Verify')
+                                  ? Icons.verified_user_outlined
+                                  : widget.example.title.contains('ClipPath')
+                                      ? Icons.cut_outlined
+                                      : widget.example.title.contains('Slanted Progress')
+                                          ? Icons.slideshow_outlined
+                                          : Icons.touch_app,
                         color: Colors.white,
                         size: 28,
                       ),
