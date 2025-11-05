@@ -1,60 +1,57 @@
 # Widget Simple
 
-一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果：动态贝塞尔曲线、渐变进度、滑动条、图片灰度对比，以及液态玻璃等。
+一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果：动态贝塞尔曲线、渐变进度条、自定义滑动条、图片灰度对比、滑动验证、裁剪路径等实用组件。
 
-## 目录结构（更新版）
+## 目录结构
 
 ```
 lib/
 ├── main.dart                      # 应用入口
+├── components/
+│   ├── app_scaffold.dart          # 统一渐变背景的Scaffold组件
+│   └── page_title_bar.dart        # 可复用的页面标题栏组件
 ├── router/
 │   └── router_config.dart         # 基于 go_router 的路由配置
 ├── page/
 │   ├── home_page.dart             # 主页与示例导航
-│   ├── bezier_curve/
-│   │   ├── animated_bezier_curve.dart
-│   │   └── animated_bezier_curve_examples.dart
-│   ├── gradient_progress/
-│   │   ├── gradient_progress_label.dart
-│   │   └── gradient_progress_example.dart
-│   ├── gradient_progress_2/
-│   │   └── ratio_diagonal_gray_compare_example.dart
-│   ├── seek_bar/
-│   │   ├── seek_bar_widget.dart
-│   │   └── seek_bar_example.dart
-│   ├── drag_gray_image/
-│   │   └── drag_gray_image_example.dart
-│   └── glass_example/
-│       ├── glass_example.dart
-│       ├── basic_app.dart
-│       ├── clock.dart
-│       ├── grid.dart
-│       ├── shapes.dart
-│       ├── shared.dart
-│       ├── main.dart
-│       └── widgets/
-├── slide_verify/
-│       └── slide_verify_page.dart
+│   ├── bezier_curve/              # 动态贝塞尔曲线示例
+│   ├── clip_path/                 # 路径裁剪示例
+│   ├── drag_gray_image/           # 拖动控制图片灰度示例
+│   ├── gradient_progress/         # 渐变进度条示例
+│   ├── gradient_progress_2/       # 对角线灰度对比示例
+│   ├── gradient_progress_3/       # 斜纹进度指示器示例
+│   ├── seek_bar/                  # 自定义滑动条示例
+│   └── slide_verify/              # 滑动验证组件示例
 assets/
-└── image/
-    ├── glass/                     # 液态玻璃示例资源
+└── image/                         # 项目资源图片
+    ├── arrow.png
+    ├── circle-arrow.png
+    ├── default_avatar.png
+    ├── glass/                     # 玻璃效果相关图片
     ├── high_brightness_light.webp
     ├── low_brightness_light.webp
     ├── pause.webp
     ├── play.webp
     ├── question.webp
+    ├── qus.png
     └── streams.webp
 ```
 
 ## 模块与示例
 
-- 动态贝塞尔曲线：`lib/page/bezier_curve/animated_bezier_curve(.dart|_examples.dart)`
-- 渐变进度条：`lib/page/gradient_progress/gradient_progress_label.dart`
-- 自定义滑动条：`lib/page/seek_bar/seek_bar_widget.dart`
-- 图片灰度对比：`lib/page/drag_gray_image/drag_gray_image_example.dart`
-- 对角线灰度对比：`lib/page/gradient_progress_2/ratio_diagonal_gray_compare_example.dart`
-- 液态玻璃示例：`lib/page/glass_example/*`（基于 `liquid_glass_renderer`）
-- 滑动验证：`lib/page/slide_verify/slide_verify_page.dart`
+### 可复用组件
+- **AppScaffold**：提供统一蓝紫色渐变背景的Scaffold组件，支持自定义装饰和布局属性
+- **PageTitleBar**：包含返回按钮和标题文本的可复用页面标题栏组件，支持自定义样式
+
+### 功能示例
+- **动态贝塞尔曲线**：展示动画贝塞尔曲线的实现与应用，支持播放状态控制
+- **自定义滑动条**：功能丰富的SeekBar组件，支持图标、渐变、背景配置等多种样式
+- **裁剪路径**：展示Flutter Path裁剪与基本API用法，包含多种自定义裁剪器
+- **渐变进度条**：具有美观渐变效果的进度指示器，支持自定义文本和样式
+- **图片灰度对比**：通过拖动控制图片灰度转换比例，展示左右分割的灰度/彩色对比效果
+- **对角线灰度对比**：对角线分割的图片灰度对比效果，支持角度调整
+- **斜纹进度指示器**：带有斜纹背景的可点击进度条，支持文本和样式自定义
+- **滑动验证**：模拟滑块验证功能的交互组件，支持旋转动画和状态反馈
 
 ## 依赖与环境
 
@@ -69,15 +66,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   go_router: ^14.0.0
-  liquid_glass_renderer: ^0.1.1-dev.26
-  flex_color_picker: ^3.7.1
-  flutter_hooks: ^0.21.2
-  heroine: ^0.5.0-dev.6
-  rivership: ^0.3.0-dev.6
-  smooth_sheets: ^0.12.0
-  motor: ^1.0.0-dev.3
-  google_fonts: ^6.2.1
-  stupid_simple_sheet: ^0.5.0
+  scrollview_observer: ^1.26.2
 
 dev_dependencies:
   flutter_test:
@@ -106,7 +95,15 @@ dev_dependencies:
 
 ## 路由
 
-基于 `go_router` 的集中路由在 `lib/router/router_config.dart` 中维护，主页 `HomePage` 提供到各示例页的导航入口。
+基于 `go_router` 的集中路由在 `lib/router/router_config.dart` 中维护，主页 `HomePage` 提供到各示例页的导航入口。路由配置清晰，便于扩展和维护。
+
+## 界面设计
+
+- 主页采用卡片式布局，每个示例卡片都有独特的渐变背景和图标
+- 实现了鼠标悬停动画效果，提升用户体验
+- 响应式设计，适配不同屏幕尺寸
+- 统一的页面风格，基于AppScaffold和PageTitleBar组件实现一致的视觉体验
+- 蓝紫色渐变主题背景，提供现代感的视觉效果
 
 ## 开发与质量
 
@@ -114,6 +111,8 @@ dev_dependencies:
 - 静态分析：`dart analyze`
 - 单元测试：`flutter test`
 - 构建 Android 包：`flutter build apk`
+- 组件复用：通过AppScaffold和PageTitleBar实现UI组件复用，减少重复代码
+- 统一风格：所有功能页面使用一致的设计模式，提升代码可维护性
 
 ## 许可
 

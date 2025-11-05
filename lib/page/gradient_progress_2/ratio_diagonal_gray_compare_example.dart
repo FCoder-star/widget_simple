@@ -297,6 +297,8 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:widget_simple/components/app_scaffold.dart';
+import 'package:widget_simple/components/page_title_bar.dart';
 
 
 class SlantedSplitImage extends StatefulWidget {
@@ -314,11 +316,9 @@ class _SlantedSplitImageState extends State<SlantedSplitImage> {
   Widget build(BuildContext context) {
     const image = AssetImage('assets/image/streams.webp'); // 替换成你自己的图片
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text("斜线灰度对比"),
-      ),
+    return AppScaffold(
+      appBar: PageTitleBar(title: "斜线灰度对比"),
+
       body: GestureDetector(
         onPanUpdate: (details) {
           setState(() {

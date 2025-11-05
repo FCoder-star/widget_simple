@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:widget_simple/components/app_scaffold.dart';
+import 'package:widget_simple/components/page_title_bar.dart';
 import 'package:widget_simple/page/gradient_progress_3/slanted_progress.dart';
 
 /// 示例：带斜纹的进度指示器页面
@@ -43,8 +45,8 @@ class _SlantedProgressExampleState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('斜纹进度指示器')),
+    return AppScaffold(
+      appBar: PageTitleBar(title: "斜纹进度指示器"),
       body: Center(
         child: SlantedProgress(
           progress: progress, // 65% 进度

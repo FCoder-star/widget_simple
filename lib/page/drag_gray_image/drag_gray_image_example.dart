@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:widget_simple/components/app_scaffold.dart';
+import 'package:widget_simple/components/page_title_bar.dart';
 
 class DragGrayImageCompare extends StatefulWidget {
   const DragGrayImageCompare({super.key});
@@ -12,9 +14,9 @@ class _DragGrayImageCompareState extends State<DragGrayImageCompare> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(title: const Text('左右拖动灰度对比效果')),
+    return AppScaffold(
+
+      appBar: PageTitleBar(title:"左右拖动灰度对比效果"),
       body: Center(
         child: AspectRatio(
           aspectRatio: 1, // 方形示例，可换成图片宽高比

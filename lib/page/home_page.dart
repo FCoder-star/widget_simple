@@ -7,52 +7,96 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     final List<ExampleItem> examples = [
       ExampleItem(
         title: 'Animated Bezier Curve',
         description: '展示动画贝塞尔曲线示例',
         routeName: AppRoutes.animatedBezierCurve,
+        gradientColors: [
+          colorScheme.primary.withOpacity(0.7),
+          colorScheme.secondary.withOpacity(0.7),
+        ],
+        iconData: Icons.auto_awesome_outlined,
       ),
-      ExampleItem(
-        title: 'Gradient Progress',
-        description: '展示渐变进度条示例',
-        routeName: AppRoutes.gradientProgress,
-      ),
+
       ExampleItem(
         title: 'Seek Bar',
         description: '展示自定义滑动条示例',
         routeName: AppRoutes.seekBar,
+        gradientColors: [
+          Colors.teal.withOpacity(0.7),
+          Colors.blue.withOpacity(0.7),
+        ],
+        iconData: Icons.touch_app,
       ),
+
+      ExampleItem(
+        title: 'ClipPath Example',
+        description: '展示 Path 裁剪与基本 API 用法',
+        routeName: AppRoutes.clipPath,
+        gradientColors: [
+          Colors.purple.withOpacity(0.7),
+          Colors.deepPurple.withOpacity(0.7),
+        ],
+        iconData: Icons.cut_outlined,
+      ),
+
+      ExampleItem(
+        title: 'Gradient Progress',
+        description: '展示渐变进度条示例',
+        routeName: AppRoutes.gradientProgress,
+        gradientColors: [
+          Colors.deepPurpleAccent.withOpacity(0.7),
+          Colors.pinkAccent.withOpacity(0.7),
+        ],
+        iconData: Icons.linear_scale,
+      ),
+
       ExampleItem(
         title: 'Drag Gray Image',
         description: '展示拖动图片控制灰化比例示例',
         routeName: AppRoutes.dragGrayImage,
+        gradientColors: [
+          Colors.grey.withOpacity(0.7),
+          Colors.blueGrey.withOpacity(0.7),
+        ],
+        iconData: Icons.image_outlined,
       ),
       ExampleItem(
         title: 'Diagonal Gray Compare',
         description: '展示对角线分割图片控制灰化比例示例',
         routeName: AppRoutes.ratioDiagonalGrayCompare,
+        gradientColors: [
+          Colors.orange.withOpacity(0.7),
+          Colors.deepOrange.withOpacity(0.7),
+        ],
+        iconData: Icons.compare_outlined,
       ),
+
       ExampleItem(
-        title: 'GlassExample',
-        description: '展示液态玻璃效果',
-        routeName: AppRoutes.glassExample,
+        title: 'Slanted Progress Indicator',
+        description: '展示斜纹背景可点击进度条',
+        routeName: AppRoutes.slantedProgressIndicator,
+        gradientColors: [
+          Colors.indigo.withOpacity(0.7),
+          Colors.blueAccent.withOpacity(0.7),
+        ],
+        iconData: Icons.slideshow_outlined,
       ),
       ExampleItem(
         title: 'Slide Verify',
         description: '展示滑动验证组件示例',
         routeName: AppRoutes.slideVerify,
+        gradientColors: [
+          const Color(0xFF2C3E50).withOpacity(0.8), // 深蓝灰色
+          const Color(0xFF3498DB).withOpacity(0.8), // 现代蓝色
+        ],
+        iconData: Icons.verified_user_outlined,
       ),
-      ExampleItem(
-        title: 'ClipPath Example',
-        description: '展示 Path 裁剪与基本 API 用法',
-        routeName: AppRoutes.clipPath,
-      ),
-      ExampleItem(
-        title: 'Slanted Progress Indicator',
-        description: '展示斜纹背景可点击进度条',
-        routeName: AppRoutes.slantedProgressIndicator,
-      ),
+
+
     ];
 
     return Scaffold(
@@ -75,11 +119,15 @@ class ExampleItem {
   final String title;
   final String description;
   final String routeName;
+  final List<Color> gradientColors;
+  final IconData iconData;
 
   ExampleItem({
     required this.title,
     required this.description,
     required this.routeName,
+    required this.gradientColors,
+    required this.iconData,
   });
 }
 
@@ -118,36 +166,7 @@ class _ExampleCardState extends State<ExampleCard>
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    
-    // 为每个示例项定义不同的颜色
-    final List<Color> gradientColors = [
-      if (widget.example.title.contains('Bezier')) ...[
-        colorScheme.primary.withOpacity(0.7),
-        colorScheme.secondary.withOpacity(0.7),
-      ] else if (widget.example.title.contains('Gradient')) ...[
-        Colors.deepPurpleAccent.withOpacity(0.7),
-        Colors.pinkAccent.withOpacity(0.7),
-      ] else if (widget.example.title.contains('Drag Gray')) ...[
-        Colors.grey.withOpacity(0.7),
-        Colors.blueGrey.withOpacity(0.7),
-      ] else if (widget.example.title.contains('Diagonal')) ...[
-        Colors.orange.withOpacity(0.7),
-        Colors.deepOrange.withOpacity(0.7),
-      ] else if (widget.example.title.contains('Slide Verify')) ...[
-        const Color(0xFF2C3E50).withOpacity(0.8), // 深蓝灰色
-        const Color(0xFF3498DB).withOpacity(0.8), // 现代蓝色
-      ] else if (widget.example.title.contains('ClipPath')) ...[
-        Colors.purple.withOpacity(0.7),
-        Colors.deepPurple.withOpacity(0.7),
-      ] else if (widget.example.title.contains('Slanted Progress')) ...[
-        Colors.indigo.withOpacity(0.7),
-        Colors.blueAccent.withOpacity(0.7),
-      ] else ...[
-        Colors.teal.withOpacity(0.7),
-        Colors.blue.withOpacity(0.7),
-      ]
-    ];
+    // 直接使用ExampleItem中定义的渐变颜色
 
     return MouseRegion(
       onEnter: (_) {
@@ -168,7 +187,7 @@ class _ExampleCardState extends State<ExampleCard>
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: gradientColors,
+              colors: widget.example.gradientColors,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -200,21 +219,7 @@ class _ExampleCardState extends State<ExampleCard>
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
-                        widget.example.title.contains('Bezier') 
-                          ? Icons.auto_awesome_outlined
-                          : widget.example.title.contains('Gradient')
-                            ? Icons.linear_scale
-                            : widget.example.title.contains('Drag Gray')
-                              ? Icons.image_outlined
-                              : widget.example.title.contains('Diagonal')
-                                ? Icons.compare_outlined
-                              : widget.example.title.contains('Slide Verify')
-                                  ? Icons.verified_user_outlined
-                                  : widget.example.title.contains('ClipPath')
-                                      ? Icons.cut_outlined
-                                      : widget.example.title.contains('Slanted Progress')
-                                          ? Icons.slideshow_outlined
-                                          : Icons.touch_app,
+                        widget.example.iconData,
                         color: Colors.white,
                         size: 28,
                       ),

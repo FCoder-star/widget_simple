@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:widget_simple/components/app_scaffold.dart';
+import 'package:widget_simple/components/page_title_bar.dart';
 import 'package:widget_simple/page/bezier_curve/animated_bezier_curve.dart';
 
 class AnimatedBezierCurveExamples extends StatefulWidget {
@@ -15,45 +17,12 @@ class _AnimatedBezierCurveExamplesState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF0f0c29), Color(0xFF302b63), Color(0xFF24243e)],
-          ),
-        ),
-        child: Column(
-          children: [
-            // 自定义 AppBar
-            Container(
-              padding: EdgeInsets.only(top: 50, bottom: 20),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  SizedBox(width: 16),
-                  Text(
-                    "Animated Bezier Curve",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black.withOpacity(0.5),
-                          offset: Offset(2, 2),
-                          blurRadius: 4,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+    return AppScaffold(
+      appBar: PageTitleBar(
+        title: "Animated Bezier Curve",
+      ),
+      body: Column(
+        children: [
             // 标题说明
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -80,7 +49,6 @@ class _AnimatedBezierCurveExamplesState
             ),
           ],
         ),
-      ),
     );
   }
 

@@ -1,14 +1,16 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:widget_simple/components/app_scaffold.dart';
+import 'package:widget_simple/components/page_title_bar.dart';
 
 class ClipPathExample extends StatelessWidget {
   const ClipPathExample({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('ClipPath Example')),
+    return AppScaffold(
+      appBar: PageTitleBar(title: "ClipPath Example"),
       body: Center(
         child: ListView(
           children: [

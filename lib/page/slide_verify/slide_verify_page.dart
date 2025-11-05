@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:widget_simple/components/app_scaffold.dart';
+import 'package:widget_simple/components/page_title_bar.dart';
 
 /// 滑动验证组件
 class SlideVerifyPage extends StatelessWidget {
@@ -7,33 +9,53 @@ class SlideVerifyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("SlideVerifyPage")),
-      body: Center(
-        child: SlideVerify(
-          sliderImage: "assets/image/circle-arrow.png", // 建议使用 assets
-          successText: "验证成功",
-          initText: "滑动验证",
+    return AppScaffold(
+      appBar: PageTitleBar(title: "SlideVerifyPage"),
+      body: Column(
+        children: [
+          // 标题说明
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Text(
+              '滑动验证组件演示',
+              style: TextStyle(fontSize: 16, color: Colors.white70),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          // 内容区域
+          Expanded(
+            child: Center(
+              child: SlideVerify(
+                sliderImage: "assets/image/circle-arrow.png", // 建议使用 assets
+                successText: "验证成功",
+                initText: "滑动验证",
+// 🩶 背景轨道色：柔和灰蓝，比背景稍亮一点
+                bgColor: const Color(0xFF8C91B0),
 
-          // Material 3 配色：更符合 Android 设计指南
-          bgColor: Theme.of(context).colorScheme.secondary,
-          moveColor: Theme.of(context).colorScheme.primary,
-          successTextStyle: TextStyle(
-            fontSize: 14,
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.w600,
+                // 💜 进度条与滑块移动色：亮紫蓝，氛围风主色
+                moveColor: const Color(0xFFB39DDB),
+
+                // ✅ 成功文本样式：亮一点但非纯白
+                successTextStyle: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFFF0E9FF),
+                  fontWeight: FontWeight.w600,
+                ),
+
+                // 🩶 初始文字：浅灰蓝带透明度，与背景区分
+                initTextStyle: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFFCDD1E0),
+                  fontWeight: FontWeight.w500,
+                ),
+                onVerifySuccess: () {
+                  // 处理验证成功逻辑
+                  debugPrint("滑动验证成功!");
+                },
+              ),
+            ),
           ),
-          initTextStyle: TextStyle(
-            fontSize: 14,
-            color: Theme.of(
-              context,
-            ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-          ),
-          onVerifySuccess: () {
-            // 处理验证成功逻辑
-            debugPrint("滑动验证成功!");
-          },
-        ),
+        ],
       ),
     );
   }

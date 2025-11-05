@@ -1,8 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_simple/page/bezier_curve/animated_bezier_curve_examples.dart';
-import 'package:widget_simple/page/glass_example/glass_example.dart';
-import 'package:widget_simple/page/glass_example/clock.dart';
+
 import 'package:widget_simple/page/gradient_progress/gradient_progress_example.dart';
 import 'package:widget_simple/page/gradient_progress_3/slanted_progress_example.dart';
 import 'package:widget_simple/page/seek_bar/seek_bar_example.dart';
@@ -71,13 +70,7 @@ final GoRouter routerConfig = GoRouter(
         return const SlantedSplitImage();
       },
     ),
-    GoRoute(
-      path: AppRoutes.glassExample,
-      name: AppRoutes.glassExample,
-      builder: (BuildContext context, GoRouterState state) {
-        return const ClockExample();
-      },
-    ),
+
     GoRoute(
       path: AppRoutes.slideVerify,
       name: AppRoutes.slideVerify,
