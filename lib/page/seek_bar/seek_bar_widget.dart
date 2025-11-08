@@ -155,7 +155,7 @@ class _SeekBarState extends State<SeekBarWidget> {
     } else {
       relative = (tapPos.dx - minCenterX) / (maxCenterX - minCenterX);
       if (relative.isNaN) relative = 0.0;
-      relative = relative.clamp(0.0, 1.0) as double;
+      relative = relative.clamp(0.0, 1.0);
     }
 
     _value = relative;

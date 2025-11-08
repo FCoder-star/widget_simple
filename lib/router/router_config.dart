@@ -10,6 +10,7 @@ import 'package:widget_simple/page/drag_gray_image/drag_gray_image_example.dart'
 import 'package:widget_simple/page/gradient_progress_2/ratio_diagonal_gray_compare_example.dart';
 import 'package:widget_simple/page/slide_verify/slide_verify_page.dart';
 import 'package:widget_simple/page/clip_path/clip_path_example.dart';
+import 'package:widget_simple/page/chamfered/pages/chamfered_demo_page.dart';
 
 // 定义路由名称常量
 class AppRoutes {
@@ -23,6 +24,7 @@ class AppRoutes {
   static const String slideVerify = '/slide-verify';
   static const String clipPath = '/clip-path';
   static const String slantedProgressIndicator = '/slanted-progress-indicator';
+  static const String chamfered = '/chamfered';
 }
 
 // 路由配置
@@ -90,6 +92,13 @@ final GoRouter routerConfig = GoRouter(
       name: AppRoutes.slantedProgressIndicator,
       builder: (BuildContext context, GoRouterState state) {
         return const SlantedProgressExample();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.chamfered,
+      name: AppRoutes.chamfered,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ChamferedDemoPage();
       },
     ),
   ],

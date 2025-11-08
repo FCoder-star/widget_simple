@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     final List<ExampleItem> examples = [
       ExampleItem(
         title: 'Animated Bezier Curve',
@@ -32,16 +32,7 @@ class HomePage extends StatelessWidget {
         iconData: Icons.touch_app,
       ),
 
-      ExampleItem(
-        title: 'ClipPath Example',
-        description: '展示 Path 裁剪与基本 API 用法',
-        routeName: AppRoutes.clipPath,
-        gradientColors: [
-          Colors.purple.withOpacity(0.7),
-          Colors.deepPurple.withOpacity(0.7),
-        ],
-        iconData: Icons.cut_outlined,
-      ),
+
 
       ExampleItem(
         title: 'Gradient Progress',
@@ -96,7 +87,26 @@ class HomePage extends StatelessWidget {
         iconData: Icons.verified_user_outlined,
       ),
 
-
+      ExampleItem(
+        title: 'ClipPath Example',
+        description: '展示 Path 裁剪与基本 API 用法',
+        routeName: AppRoutes.clipPath,
+        gradientColors: [
+          Colors.purple.withOpacity(0.7),
+          Colors.deepPurple.withOpacity(0.7),
+        ],
+        iconData: Icons.cut_outlined,
+      ),
+      ExampleItem(
+        title: 'Chamfered Container',
+        description: '展示切角容器组件示例',
+        routeName: AppRoutes.chamfered,
+        gradientColors: [
+          const Color(0xFF4CAF50).withOpacity(0.8), // 绿色
+          const Color(0xFF2196F3).withOpacity(0.8), // 蓝色
+        ],
+        iconData: Icons.crop_square_outlined,
+      ),
     ];
 
     return Scaffold(
@@ -144,7 +154,6 @@ class _ExampleCardState extends State<ExampleCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  bool _isHovered = false;
 
   @override
   void initState() {
@@ -153,9 +162,10 @@ class _ExampleCardState extends State<ExampleCard>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    _animation = Tween<double>(begin: 1.0, end: 1.05).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 1.0,
+      end: 1.05,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -170,15 +180,9 @@ class _ExampleCardState extends State<ExampleCard>
 
     return MouseRegion(
       onEnter: (_) {
-        setState(() {
-          _isHovered = true;
-        });
         _controller.forward();
       },
       onExit: (_) {
-        setState(() {
-          _isHovered = false;
-        });
         _controller.reverse();
       },
       child: ScaleTransition(

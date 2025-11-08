@@ -163,7 +163,7 @@ class _SlideVerifyState extends State<SlideVerify>
     if (_isVerified) return; // 验证成功后禁止拖拽
 
     final newDistance = _currentDragDistance + details.delta.dx;
-    final clampedDistance = newDistance.clamp(0.0, _maxDragDistance) as double;
+    final clampedDistance = newDistance.clamp(0.0, _maxDragDistance);
 
     if (clampedDistance >= _maxDragDistance) {
       // 验证成功
