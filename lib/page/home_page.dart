@@ -107,6 +107,16 @@ class HomePage extends StatelessWidget {
         ],
         iconData: Icons.crop_square_outlined,
       ),
+      ExampleItem(
+        title: 'Super Ellipse Logo',
+        description: '展示超椭圆/小米 LOGO 绘制',
+        routeName: AppRoutes.superEllipse,
+        gradientColors: [
+          const Color(0xFFFFA726).withOpacity(0.85), // 小米橙
+          const Color(0xFFFF5722).withOpacity(0.9), // 鲜亮橙红
+        ],
+        iconData: Icons.blur_circular,
+      ),
     ];
 
     return Scaffold(
