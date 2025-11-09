@@ -15,22 +15,41 @@ lib/
 ├── page/
 │   ├── home_page.dart             # 主页与示例导航
 │   ├── bezier_curve/              # 动态贝塞尔曲线示例
+│   │   ├── animated_bezier_curve.dart
+│   │   └── animated_bezier_curve_examples.dart
 │   ├── chamfered/                 # 切角容器组件示例
+│   │   ├── pages/chamfered_demo_page.dart
+│   │   └── widgets/
+│   │       ├── chamfered_container.dart
+│   │       └── CHANGELOG_CHAMFERED.md
 │   ├── clip_path/                 # 路径裁剪示例
+│   │   └── clip_path_example.dart
 │   ├── drag_gray_image/           # 拖动控制图片灰度示例
+│   │   └── drag_gray_image_example.dart
 │   ├── gradient_progress/         # 渐变进度条示例
+│   │   ├── gradient_progress_example.dart
+│   │   └── gradient_progress_label.dart
 │   ├── gradient_progress_2/       # 对角线灰度对比示例
+│   │   └── ratio_diagonal_gray_compare_example.dart
 │   ├── gradient_progress_3/       # 斜纹进度指示器示例
+│   │   ├── slanted_progress.dart
+│   │   └── slanted_progress_example.dart
 │   ├── seek_bar/                  # 自定义滑动条示例
-│   ├── super/                     # 超椭圆 LOGO 示例
-│   └── slide_verify/              # 滑动验证组件示例
+│   │   ├── seek_bar_example.dart
+│   │   └── seek_bar_widget.dart
+│   ├── slide_verify/              # 滑动验证组件示例
+│   │   └── slide_verify_page.dart
+│   └── super/                     # 超椭圆 LOGO 示例
+│       └── super_ellipse_example.dart
 assets/
 └── image/                         # 项目资源图片
     ├── arrow.png
     ├── circle-arrow.png
     ├── default_avatar.png
-    ├── glass/                     # 玻璃效果相关图片
+    ├── glass/
+    │   └── wallpaper.webp
     ├── high_brightness_light.webp
+    ├── indicator_bg.png
     ├── low_brightness_light.webp
     ├── pause.webp
     ├── play.webp
