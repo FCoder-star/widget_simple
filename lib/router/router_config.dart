@@ -12,6 +12,7 @@ import 'package:widget_simple/page/slide_verify/slide_verify_page.dart';
 import 'package:widget_simple/page/clip_path/clip_path_example.dart';
 import 'package:widget_simple/page/chamfered/pages/chamfered_demo_page.dart';
 import 'package:widget_simple/page/super/super_ellipse_example.dart';
+import 'package:widget_simple/page/shader_mask/shader_mask_example.dart';
 
 // 定义路由名称常量
 class AppRoutes {
@@ -27,6 +28,7 @@ class AppRoutes {
   static const String slantedProgressIndicator = '/slanted-progress-indicator';
   static const String chamfered = '/chamfered';
   static const String superEllipse = '/super-ellipse';
+  static const String shaderMask = '/shader-mask';
 }
 
 // 路由配置
@@ -108,6 +110,13 @@ final GoRouter routerConfig = GoRouter(
       name: AppRoutes.superEllipse,
       builder: (BuildContext context, GoRouterState state) {
         return const SuperEllipseDemo();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.shaderMask,
+      name: AppRoutes.shaderMask,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ShaderMaskExample();
       },
     ),
   ],

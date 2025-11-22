@@ -1,6 +1,6 @@
 # Widget Simple
 
-一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果。包含 10 个功能丰富的组件示例：动态贝塞尔曲线、自定义滑动条、路径裁剪、渐变进度条、图片灰度对比、对角线灰度对比、斜纹进度指示器、滑动验证、切角容器、超椭圆 LOGO 等实用组件。所有组件均提供完整的演示页面和详细的使用示例。
+一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果。包含 11 个功能丰富的组件示例：动态贝塞尔曲线、自定义滑动条、路径裁剪、渐变进度条、图片灰度对比、对角线灰度对比、斜纹进度指示器、滑动验证、切角容器、超椭圆 LOGO、ShaderMask 特效等实用组件。所有组件均提供完整的演示页面和详细的使用示例。
 
 ## 目录结构
 
@@ -39,8 +39,10 @@ lib/
 │   │   └── seek_bar_widget.dart
 │   ├── slide_verify/              # 滑动验证组件示例
 │   │   └── slide_verify_page.dart
-│   └── super/                     # 超椭圆 LOGO 示例
-│       └── super_ellipse_example.dart
+│   ├── super/                     # 超椭圆 LOGO 示例
+│   │   └── super_ellipse_example.dart
+│   └── shader_mask/               # ShaderMask 特效示例
+│       └── shader_mask_example.dart
 assets/
 └── image/                         # 项目资源图片
     ├── arrow.png
@@ -153,6 +155,16 @@ assets/
   - 页面底部提供 1–5 的滑杆，动态调整曲线形状
   - 小米橙色配色，展示填充与描边效果
 - **应用场景**：品牌 LOGO 演示、参数化图形教育、定制图标设计
+
+#### 11. ShaderMask 特效 (ShaderMask Effects)
+- **功能**：展示 ShaderMask 的多种视觉特效实现
+- **特性**：
+  - **文字渐变效果**：使用 `SweepGradient` 旋转渐变填充文字，创造彩虹般的多彩效果
+  - **渐变高光效果**：使用 `LinearGradient` 实现金色高光主题，适用于图标和文字
+  - **闪光动效**：使用 `AnimationController` 配合 ShaderMask 实现流光、扫光等动态效果
+  - 支持多种 BlendMode 混合模式
+  - 霓虹色系炫酷配色方案
+- **应用场景**：品牌 LOGO 展示、按钮特效、加载动画、文字艺术效果
 
 ## 依赖与环境
 

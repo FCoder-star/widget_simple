@@ -117,6 +117,16 @@ class HomePage extends StatelessWidget {
         ],
         iconData: Icons.blur_circular,
       ),
+      ExampleItem(
+        title: 'ShaderMask Effects',
+        description: '展示 ShaderMask 镂空、高光、闪光效果',
+        routeName: AppRoutes.shaderMask,
+        gradientColors: [
+          const Color(0xFF667eea).withOpacity(0.85), // 紫蓝色
+          const Color(0xFF764ba2).withOpacity(0.9), // 深紫色
+        ],
+        iconData: Icons.auto_fix_high,
+      ),
     ];
 
     return Scaffold(
