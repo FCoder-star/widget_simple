@@ -155,7 +155,7 @@ class _SeekBarState extends State<SeekBarWidget> {
     } else {
       relative = (tapPos.dx - minCenterX) / (maxCenterX - minCenterX);
       if (relative.isNaN) relative = 0.0;
-      relative = relative.clamp(0.0, 1.0);
+      relative = relative.clamp(0.0, 1.0) as double;
     }
 
     _value = relative;
@@ -173,6 +173,30 @@ class _SeekBarState extends State<SeekBarWidget> {
   }
 
   LayoutBuilder buildLayoutBuilder() {
+    final customPaint = CustomPaint(
+      willChange: !_imagesLoaded,
+      painter: _ProgressBarPainter(
+          value: _value,
+          borderColor: widget.borderColor,
+          borderWidth: widget.borderWidth,
+          borderRadius: widget.borderRadius,
+          barPadding: widget.barPadding,
+          barHeight: widget.barHeight,
+          thumbSize: widget.thumbSize,
+          thumbColor: widget.thumbColor,
+          backgroundColor: widget.backgroundColor,
+          gradientStartColor: widget.gradientStartColor,
+          gradientEndColor: widget.gradientEndColor,
+          paddingColor: widget.paddingColor,
+          leftImage: _leftImage,
+          rightImage: _rightImage,
+          iconPadding: widget.iconPadding,
+          iconSize: widget.iconSize,
+          drawIcons: widget.drawIcons,
+          drawThumb: widget.drawThumb,
+          showBlur: widget.showBlur),
+    );
+
     return LayoutBuilder(
       builder: (context, size) {
         return GestureDetector(
@@ -180,29 +204,13 @@ class _SeekBarState extends State<SeekBarWidget> {
           child: SizedBox(
             height: widget.height,
             width: size.maxWidth,
-            child: CustomPaint(
-              willChange: !_imagesLoaded,
-              painter: _ProgressBarPainter(
-                  value: _value,
-                  borderColor: widget.borderColor,
-                  borderWidth: widget.borderWidth,
-                  borderRadius: widget.borderRadius,
-                  barPadding: widget.barPadding,
-                  barHeight: widget.barHeight,
-                  thumbSize: widget.thumbSize,
-                  thumbColor: widget.thumbColor,
-                  backgroundColor: widget.backgroundColor,
-                  gradientStartColor: widget.gradientStartColor,
-                  gradientEndColor: widget.gradientEndColor,
-                  paddingColor: widget.paddingColor,
-                  leftImage: _leftImage,
-                  rightImage: _rightImage,
-                  iconPadding: widget.iconPadding,
-                  iconSize: widget.iconSize,
-                  drawIcons: widget.drawIcons,
-                  drawThumb: widget.drawThumb,
-                  showBlur: widget.showBlur),
-            ),
+            // drawThumb=false 时用 ClipRRect 裁剪，防止小值时进度条溢出
+            child: widget.drawThumb
+                ? customPaint
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(widget.barHeight),
+                    child: customPaint,
+                  ),
           ),
           onHorizontalDragStart: (DragStartDetails details) {
             widget.onDragStart?.call();
@@ -356,18 +364,26 @@ class _ProgressBarPainter extends CustomPainter {
       end: Alignment.centerRight,
     ).createShader(progressRect);
 
+
+
     final RRect adjustedProgressRRect = RRect.fromLTRBAndCorners(
       progressRect.left,
       progressRect.top,
       progressRect.right,
       progressRect.bottom,
-      topLeft: Radius.circular(barHeight),
-      topRight: Radius.circular(drawThumb ? 0 : barHeight),
-      bottomLeft: Radius.circular(barHeight),
-      bottomRight: Radius.circular(drawThumb ? 0 : barHeight),
+      topLeft: Radius.circular(barHeight / 2),
+      bottomLeft: Radius.circular(barHeight / 2),
+      topRight: Radius.circular(0),
+      bottomRight: Radius.circular(0),
     );
 
+    // 使用背景轨道作为裁剪区域，防止小值时进度条溢出
+    canvas.save();
+    canvas.clipRRect(
+      RRect.fromRectAndRadius(backgroundRect, Radius.circular(barHeight)),
+    );
     canvas.drawRRect(adjustedProgressRRect, progressPaint);
+    canvas.restore();
 
     Offset center = Offset(leftPadding + playedPart, size.height / 2);
     Paint shadowPaint;

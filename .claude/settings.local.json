@@ -1,9 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(flutter analyze:*)"
+      "Bash(flutter analyze:*)",
+      "Bash(test:*)",
+      "Bash(cat:*)",
+      "Bash(npx:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true
 }
