@@ -127,6 +127,16 @@ class HomePage extends StatelessWidget {
         ],
         iconData: Icons.auto_fix_high,
       ),
+      ExampleItem(
+        title: 'Wave Gradient Text',
+        description: '展示波浪渐变文字动画效果',
+        routeName: AppRoutes.animatedText,
+        gradientColors: [
+          const Color(0xFFFF0080).withOpacity(0.85), // 霓虹粉
+          const Color(0xFF00FF9F).withOpacity(0.9), // 霓虹绿
+        ],
+        iconData: Icons.text_fields,
+      ),
     ];
 
     return Scaffold(

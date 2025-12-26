@@ -13,6 +13,7 @@ import 'package:widget_simple/page/clip_path/clip_path_example.dart';
 import 'package:widget_simple/page/chamfered/pages/chamfered_demo_page.dart';
 import 'package:widget_simple/page/super/super_ellipse_example.dart';
 import 'package:widget_simple/page/shader_mask/shader_mask_example.dart';
+import 'package:widget_simple/page/animated_text/pages/animated_text_page.dart';
 
 // 定义路由名称常量
 class AppRoutes {
@@ -29,6 +30,7 @@ class AppRoutes {
   static const String chamfered = '/chamfered';
   static const String superEllipse = '/super-ellipse';
   static const String shaderMask = '/shader-mask';
+  static const String animatedText = '/animated-text';
 }
 
 // 路由配置
@@ -117,6 +119,13 @@ final GoRouter routerConfig = GoRouter(
       name: AppRoutes.shaderMask,
       builder: (BuildContext context, GoRouterState state) {
         return const ShaderMaskExample();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.animatedText,
+      name: AppRoutes.animatedText,
+      builder: (BuildContext context, GoRouterState state) {
+        return const AnimatedTextPage(title: 'Wave Gradient Text');
       },
     ),
   ],

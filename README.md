@@ -1,6 +1,6 @@
 # Widget Simple
 
-一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果。包含 11 个功能丰富的组件示例：动态贝塞尔曲线、自定义滑动条、路径裁剪、渐变进度条、图片灰度对比、对角线灰度对比、斜纹进度指示器、滑动验证、切角容器、超椭圆 LOGO、ShaderMask 特效等实用组件。所有组件均提供完整的演示页面和详细的使用示例。
+一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果。包含 12 个功能丰富的组件示例：动态贝塞尔曲线、自定义滑动条、路径裁剪、渐变进度条、图片灰度对比、对角线灰度对比、斜纹进度指示器、滑动验证、切角容器、超椭圆 LOGO、ShaderMask 特效、波浪渐变文字等实用组件。所有组件均提供完整的演示页面和详细的使用示例。
 
 ## 目录结构
 
@@ -41,8 +41,11 @@ lib/
 │   │   └── slide_verify_page.dart
 │   ├── super/                     # 超椭圆 LOGO 示例
 │   │   └── super_ellipse_example.dart
-│   └── shader_mask/               # ShaderMask 特效示例
-│       └── shader_mask_example.dart
+│   ├── shader_mask/               # ShaderMask 特效示例
+│   │       └── shader_mask_example.dart
+│   └── animated_text/             # 波浪渐变文字动画示例
+│       ├── pages/animated_text_page.dart
+│       └── widget/wave_gradient_text.dart
 assets/
 └── image/                         # 项目资源图片
     ├── arrow.png
@@ -166,6 +169,16 @@ assets/
   - 霓虹色系炫酷配色方案
 - **应用场景**：品牌 LOGO 展示、按钮特效、加载动画、文字艺术效果
 
+#### 12. 波浪渐变文字 (Wave Gradient Text)
+- **功能**：展示带有波浪动画和渐变效果的文字组件
+- **特性**：
+  - **多种溢出策略**：支持 none（无处理）、ellipsis（省略号）、scale（缩放）、marquee（跑马灯）
+  - **波浪动画**：文字随波浪曲线上下浮动，支持自定义振幅和相位
+  - **渐变填充**：支持多色渐变填充文字
+  - **跑马灯效果**：超出宽度时自动水平滚动
+  - 霓虹色系赛博朋克风格配色
+- **应用场景**：标题动效、品牌展示、游戏UI、创意文字效果
+
 ## 依赖与环境
 
 项目使用的关键依赖（来自 `pubspec.yaml`）：
@@ -179,6 +192,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   go_router: ^14.0.0
+  characters: ^1.4.0
 
 dev_dependencies:
   flutter_test:
