@@ -1,6 +1,6 @@
 # Widget Simple
 
-一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果。包含 12 个功能丰富的组件示例：动态贝塞尔曲线、自定义滑动条、路径裁剪、渐变进度条、图片灰度对比、对角线灰度对比、斜纹进度指示器、滑动验证、切角容器、超椭圆 LOGO、ShaderMask 特效、波浪渐变文字等实用组件。所有组件均提供完整的演示页面和详细的使用示例。
+一个多平台 Flutter 示例项目，展示多种自定义组件与视觉效果。包含 14 个功能丰富的组件示例：动态贝塞尔曲线、自定义滑动条、路径裁剪、渐变进度条、图片灰度对比、对角线灰度对比、斜纹进度指示器、滑动验证、切角容器、超椭圆 LOGO、ShaderMask 特效、波浪渐变文字、词云可视化、电子签字板等实用组件。所有组件均提供完整的演示页面和详细的使用示例。
 
 ## 目录结构
 
@@ -43,9 +43,21 @@ lib/
 │   │   └── super_ellipse_example.dart
 │   ├── shader_mask/               # ShaderMask 特效示例
 │   │       └── shader_mask_example.dart
-│   └── animated_text/             # 波浪渐变文字动画示例
-│       ├── pages/animated_text_page.dart
-│       └── widget/wave_gradient_text.dart
+│   ├── animated_text/             # 波浪渐变文字动画示例
+│   │   ├── pages/animated_text_page.dart
+│   │   └── widget/wave_gradient_text.dart
+│   ├── word_cloud/                # 词云可视化示例
+│   │   ├── models/word_cloud_state.dart
+│   │   ├── widgets/
+│   │   │   ├── word_cloud_canvas.dart
+│   │   │   └── word_cloud_toolbar.dart
+│   │   └── word_cloud_page.dart
+│   └── signature_board/           # 电子签字板示例
+│       ├── models/signature_state.dart
+│       ├── widgets/
+│       │   ├── signature_canvas.dart
+│       │   └── signature_toolbar.dart
+│       └── signature_board_page.dart
 assets/
 └── image/                         # 项目资源图片
     ├── arrow.png
@@ -178,6 +190,31 @@ assets/
   - **跑马灯效果**：超出宽度时自动水平滚动
   - 霓虹色系赛博朋克风格配色
 - **应用场景**：标题动效、品牌展示、游戏UI、创意文字效果
+
+#### 13. 词云 (Word Cloud)
+- **功能**：交互式词云可视化组件，支持多种布局和配色方案
+- **特性**：
+  - **8种布局算法**：圆形、心形、菱形、方形、三角形（上/右）、五边形、星形
+  - **4种配色方案**：彩虹色（多彩渐变）、蓝色系、暖色系（红到黄）、冷色系（青到蓝）
+  - **示例数据**：内置49个Flutter相关技术词汇，权重从100到1递减
+  - **动态字体**：基于权重自动计算字体大小（10-38px）
+  - **图片导出**：支持将词云导出为PNG图片
+  - **交互工具栏**：实时切换布局形状和配色方案
+  - **状态管理**：使用ChangeNotifier管理词云状态，支持重新生成布局
+- **应用场景**：数据可视化、关键词展示、文本分析、内容摘要、演示文稿
+
+#### 14. 电子签字板 (Signature Board)
+- **功能**：手写签名和电子签字组件，支持自由绘制和笔画管理
+- **特性**：
+  - **3种画笔粗细**：细笔画（1.5px）、中等笔画（3.0px）、粗笔画（5.0px）
+  - **2种背景模式**：白色背景、透明背景
+  - **撤销/重做**：基于栈的撤销重做机制，支持多步操作回退
+  - **清除功能**：一键清空所有笔画
+  - **图片导出**：将签名导出为PNG图片格式
+  - **实时绘制**：流畅的手势追踪和笔画渲染
+  - **状态管理**：使用ChangeNotifier管理笔画数据和画笔设置
+  - **笔画数据模型**：完整记录每条笔画的点集和粗细信息
+- **应用场景**：电子签名、手写批注、绘图工具、合同签署、表单确认
 
 ## 依赖与环境
 
