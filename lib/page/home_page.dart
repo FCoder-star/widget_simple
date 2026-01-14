@@ -137,6 +137,26 @@ class HomePage extends StatelessWidget {
         ],
         iconData: Icons.text_fields,
       ),
+      ExampleItem(
+        title: 'Signature Board',
+        description: '展示签字板组件示例',
+        routeName: AppRoutes.signatureBoard,
+        gradientColors: [
+          const Color(0xFF1E88E5).withOpacity(0.85), // 蓝色
+          const Color(0xFF42A5F5).withOpacity(0.9), // 浅蓝色
+        ],
+        iconData: Icons.edit_outlined,
+      ),
+      ExampleItem(
+        title: 'Word Cloud',
+        description: '展示词云组件示例',
+        routeName: AppRoutes.wordCloud,
+        gradientColors: [
+          const Color(0xFF9C27B0).withOpacity(0.85), // 紫色
+          const Color(0xFFE91E63).withOpacity(0.9), // 粉色
+        ],
+        iconData: Icons.cloud_outlined,
+      ),
     ];
 
     return Scaffold(
