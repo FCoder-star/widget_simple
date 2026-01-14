@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../models/signature_state.dart';
 
+/// 签字板工具栏组件
+/// 提供画笔粗细、背景色选择和操作按钮
 class SignatureToolbar extends StatelessWidget {
-  final SignatureState state;
-  final VoidCallback onSave;
+  final SignatureState state;     // 签字板状态
+  final VoidCallback onSave;      // 保存回调
 
   const SignatureToolbar({
     super.key,
@@ -22,6 +24,7 @@ class SignatureToolbar extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // 画笔粗细选择行
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -35,6 +38,7 @@ class SignatureToolbar extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
+          // 背景色选择行
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -46,6 +50,7 @@ class SignatureToolbar extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
+          // 操作按钮行
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -76,6 +81,8 @@ class SignatureToolbar extends StatelessWidget {
     );
   }
 
+  /// 构建画笔粗细按钮
+  /// 当前选中的粗细会高亮显示
   Widget _buildStrokeButton(StrokeWidth width, String label) {
     final isSelected = state.currentWidth == width;
     return ElevatedButton(
@@ -90,6 +97,8 @@ class SignatureToolbar extends StatelessWidget {
     );
   }
 
+  /// 构建背景色按钮
+  /// 当前选中的背景色会高亮显示
   Widget _buildBackgroundButton(CanvasBackground bg, String label) {
     final isSelected = state.background == bg;
     return ElevatedButton(
@@ -104,6 +113,8 @@ class SignatureToolbar extends StatelessWidget {
     );
   }
 
+  /// 构建操作按钮（撤销、重做、清除、保存）
+  /// 根据状态启用或禁用按钮（如撤销/重做）
   Widget _buildActionButton({
     required IconData icon,
     required String label,
