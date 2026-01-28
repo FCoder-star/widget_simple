@@ -66,8 +66,6 @@ class WordCloudToolbar extends StatelessWidget {
               _buildLayoutButton(LayoutAlgorithm.triangleRight, '三角→'),
               const SizedBox(width: 4),
               _buildLayoutButton(LayoutAlgorithm.pentagon, '五边'),
-              const SizedBox(width: 4),
-              _buildLayoutButton(LayoutAlgorithm.star, '星形'),
             ],
           ),
           const SizedBox(height: 12),
@@ -84,6 +82,21 @@ class WordCloudToolbar extends StatelessWidget {
                 icon: Icons.save,
                 label: '导出图片',
                 onPressed: onExport,
+              ),
+              // 轮廓开关
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Switch(
+                    value: state.showContour,
+                    onChanged: state.setShowContour,
+                    activeColor: Colors.blue,
+                  ),
+                  const Text(
+                    '显示轮廓',
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ],
               ),
             ],
           ),

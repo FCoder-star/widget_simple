@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'shape_style.dart';
+import '../utils/shape_path_builder.dart';
 
 /// 词语数据模型
 /// 包含词语文本和权重（频率）
@@ -29,7 +31,6 @@ enum LayoutAlgorithm {
   triangle,       // 三角形布局（尖朝上）
   triangleRight,  // 三角形布局（尖朝右）
   pentagon,       // 五边形布局
-  star,           // 星形布局
 }
 
 /// 词云状态管理类
@@ -44,11 +45,33 @@ class WordCloudState extends ChangeNotifier {
   // 随机数生成器，用于生成随机种子
   final Random _random = Random();
 
+  // 形状路径构建器
+  final ShapePathBuilder _shapeBuilder = ShapePathBuilder();
+
+  // 是否显示轮廓
+  bool _showContour = true;
+
   // 获取当前布局
   LayoutAlgorithm get layout => _layout;
 
   // 获取当前配色方案
   ColorSchemeType get colorScheme => _colorScheme;
+
+  // 获取形状路径构建器
+  ShapePathBuilder get shapeBuilder => _shapeBuilder;
+
+  // 获取是否显示轮廓
+  bool get showContour => _showContour;
+
+  // 获取当前样式
+  ShapeStyle get currentStyle {
+    return ShapeStyle(
+      shape: _layout,
+      contour: _getContour(),
+      gradient: _getGradient(),
+      showContour: _showContour,
+    );
+  }
 
   /// 预设的示例词语数据
   /// 包含49个Flutter相关的技术词汇，权重从100到1递减
@@ -118,6 +141,12 @@ class WordCloudState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// 设置是否显示轮廓
+  void setShowContour(bool show) {
+    _showContour = show;
+    notifyListeners();
+  }
+
   /// 重新生成词云
   /// 触发重新布局，产生不同的随机排列效果
   void regenerate() {
@@ -160,4 +189,95 @@ class WordCloudState extends ChangeNotifier {
   /// 获取随机种子
   /// 用于生成不同的布局效果
   int get randomSeed => _random.nextInt(10000);
+
+  /// 根据配色方案获取轮廓配置
+  ShapeContour _getContour() {
+    final contourColors = {
+      ColorSchemeType.rainbow: const Color(0xFFFF6B6B),
+      ColorSchemeType.blue: const Color(0xFF1E3A8A),
+      ColorSchemeType.warm: const Color(0xFFDC2626),
+      ColorSchemeType.cool: const Color(0xFF06B6D4),
+    };
+
+    return ShapeContour(
+      color: contourColors[_colorScheme]!,
+      width: 1.0,
+    );
+  }
+
+  /// 根据配色方案获取渐变配置
+  /// 使用低饱和度、高亮度的颜色确保与词语有足够对比度
+  ShapeGradientConfig _getGradient() {
+    final gradientColors = {
+      ColorSchemeType.rainbow: const [
+        Color(0xFFFFF0F0),  // 浅红
+        Color(0xFFFFFAE6),  // 浅黄
+        Color(0xFFF0FFF4),  // 浅绿
+        Color(0xFFF0F9FF),  // 浅蓝
+      ],
+      ColorSchemeType.blue: const [
+        Color(0xFFEFF6FF),  // 极浅蓝
+        Color(0xFFDBEAFE),  // 浅蓝
+      ],
+      ColorSchemeType.warm: const [
+        Color(0xFFFFF1F2),  // 浅红
+        Color(0xFFFFF7ED),  // 浅橙
+        Color(0xFFFEFCE8),  // 浅黄
+      ],
+      ColorSchemeType.cool: const [
+        Color(0xFFECFEFF),  // 浅青
+        Color(0xFFEFF6FF),  // 浅蓝
+        Color(0xFFF5F3FF),  // 浅紫
+      ],
+    };
+
+    return ShapeGradientConfig(
+      colors: gradientColors[_colorScheme]!,
+    );
+  }
+
+  /// 判断点是否在正五边形内
+  /// 使用与 ShapePathBuilder 相同的顶点计算逻辑
+  bool isInPentagon(Offset point, Offset center, double radius) {
+    // 生成五边形的 5 个顶点
+    final vertices = <Offset>[];
+    for (int k = 0; k < 5; k++) {
+      final angle = 2 * pi * k / 5 - pi / 2;
+      final x = center.dx + radius * cos(angle);
+      final y = center.dy + radius * sin(angle);
+      vertices.add(Offset(x, y));
+    }
+
+    // 使用射线法判断点是否在多边形内
+    return _isPointInPolygon(point, vertices);
+  }
+
+  /// 射线法判断点是否在多边形内
+  /// 从点向右发射一条射线，计算与多边形边的交点数
+  /// 交点数为奇数则在内部，偶数则在外部
+  bool _isPointInPolygon(Offset point, List<Offset> vertices) {
+    int intersections = 0;
+    final n = vertices.length;
+
+    for (int i = 0; i < n; i++) {
+      final v1 = vertices[i];
+      final v2 = vertices[(i + 1) % n];
+
+      // 检查射线是否与边相交
+      if ((v1.dy > point.dy) != (v2.dy > point.dy)) {
+        final intersectX = (v2.dx - v1.dx) * (point.dy - v1.dy) / (v2.dy - v1.dy) + v1.dx;
+        if (point.dx < intersectX) {
+          intersections++;
+        }
+      }
+    }
+
+    return intersections % 2 == 1;
+  }
+
+  @override
+  void dispose() {
+    _shapeBuilder.clear();
+    super.dispose();
+  }
 }

@@ -4,6 +4,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../models/word_cloud_state.dart';
+import '../models/shape_style.dart';
+import '../utils/shape_path_builder.dart';
 
 /// 词云画布组件
 /// 使用 RepaintBoundary 包裹 CustomPaint，支持图片导出
@@ -38,6 +40,9 @@ class WordCloudCanvas extends StatelessWidget {
               getColor: state.getColor,
               getFontSize: state.getFontSize,
               seed: state.randomSeed,
+              shapeBuilder: state.shapeBuilder,
+              style: state.currentStyle,
+              isInPentagon: state.isInPentagon,
             ),
             size: Size.infinite,
           ),
@@ -82,6 +87,9 @@ class WordCloudPainter extends CustomPainter {
   final Color Function(int) getColor;            // 颜色生成函数
   final double Function(int, int) getFontSize;   // 字体大小计算函数
   final int seed;                                // 随机种子
+  final ShapePathBuilder shapeBuilder;           // 形状路径构建器
+  final ShapeStyle style;                        // 形状样式
+  final bool Function(Offset, Offset, double) isInPentagon;  // 五边形判断函数
 
   WordCloudPainter({
     required this.words,
@@ -89,6 +97,9 @@ class WordCloudPainter extends CustomPainter {
     required this.getColor,
     required this.getFontSize,
     required this.seed,
+    required this.shapeBuilder,
+    required this.style,
+    required this.isInPentagon,
   });
 
   @override
@@ -96,12 +107,25 @@ class WordCloudPainter extends CustomPainter {
     // 画布尺寸检查
     if (size.width <= 0 || size.height <= 0) return;
 
-    // 绘制白色背景
-    canvas.drawRect(
-      Rect.fromLTWH(0, 0, size.width, size.height),
-      Paint()..color = Colors.white,
-    );
+    // 1. 获取形状 Path
+    final shapePath = shapeBuilder.getPath(layout, size);
 
+    // 2. 绘制渐变背景
+    final gradientShader = shapeBuilder.getShader(layout, size, style.gradient);
+    canvas.drawPath(shapePath, Paint()..shader = gradientShader);
+
+    // 3. 绘制轮廓（如果启用）
+    if (style.showContour) {
+      canvas.drawPath(
+        shapePath,
+        Paint()
+          ..color = style.contour.color
+          ..strokeWidth = style.contour.width
+          ..style = PaintingStyle.stroke,
+      );
+    }
+
+    // 4. 布局和绘制词语（保持原有逻辑）
     // 按权重降序排序词语，确保重要的词优先放置
     final sortedWords = List<WordItem>.from(words)
       ..sort((a, b) => b.weight.compareTo(a.weight));
@@ -169,14 +193,15 @@ class WordCloudPainter extends CustomPainter {
     int localSeed,
   ) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = min(size.width, size.height) * 0.45;
+    // 使用与 ShapePathBuilder 相同的半径计算，确保一致性
+    final baseRadius = min(size.width, size.height) / 2 - 8;
 
-    // 螺旋布局参数
+    // 螺旋布局参数 - 减小步长以提高密度
     double angle = localSeed * 0.1;  // 起始角度（基于种子）
     double r = 0;                     // 起始半径
-    const angleStep = 0.3;            // 角度增量
-    const radiusStep = 2.0;           // 半径增量
-    const maxAttempts = 500;          // 最大尝试次数
+    const angleStep = 0.05;           // 角度增量（更小=更密集扫描）
+    const radiusStep = 0.25;          // 半径增量（更小=更紧凑）
+    const maxAttempts = 2000;         // 最大尝试次数
 
     for (int i = 0; i < maxAttempts; i++) {
       Offset testPoint;
@@ -185,7 +210,7 @@ class WordCloudPainter extends CustomPainter {
       bool inShape = false;
       switch (shape) {
         case LayoutAlgorithm.circle:
-          if (r <= radius) {
+          if (r <= baseRadius) {
             testPoint = Offset(
               center.dx + r * cos(angle),
               center.dy + r * sin(angle),
@@ -196,7 +221,7 @@ class WordCloudPainter extends CustomPainter {
           }
           break;
         case LayoutAlgorithm.square:
-          final side = radius * 1.6;
+          final side = baseRadius * 1.35;
           final x = r * cos(angle);
           final y = r * sin(angle);
           if (x.abs() <= side / 2 && y.abs() <= side / 2) {
@@ -210,48 +235,53 @@ class WordCloudPainter extends CustomPainter {
           final x = r * cos(angle);
           final y = r * sin(angle);
           testPoint = Offset(center.dx + x, center.dy + y);
-          inShape = _isInDiamond(testPoint, center, radius * 1.2);
+          inShape = _isInDiamond(testPoint, center, baseRadius);
           break;
         case LayoutAlgorithm.triangle:
           final x = r * cos(angle);
           final y = r * sin(angle);
           testPoint = Offset(center.dx + x, center.dy + y);
-          inShape = _isInTriangle(testPoint, center, radius * 1.1);
+          inShape = _isInTriangle(testPoint, center, baseRadius);
           break;
         case LayoutAlgorithm.triangleRight:
           final x = r * cos(angle);
           final y = r * sin(angle);
           testPoint = Offset(center.dx + x, center.dy + y);
-          inShape = _isInTriangleRight(testPoint, center, radius * 1.1);
+          inShape = _isInTriangleRight(testPoint, center, baseRadius);
           break;
         case LayoutAlgorithm.pentagon:
-        case LayoutAlgorithm.star:
-          if (r <= radius * 1.2) {
-            testPoint = Offset(
-              center.dx + r * cos(angle),
-              center.dy + r * sin(angle),
-            );
-            inShape = true;
-          } else {
-            testPoint = center;
-          }
+          final x = r * cos(angle);
+          final y = r * sin(angle);
+          testPoint = Offset(center.dx + x, center.dy + y);
+          inShape = isInPentagon(testPoint, center, baseRadius);
           break;
         case LayoutAlgorithm.heart:
           final x = r * cos(angle);
           final y = r * sin(angle);
           testPoint = Offset(center.dx + x, center.dy + y);
-          inShape = _isInHeart(testPoint, center, radius * 1.4);
+          inShape = _isInHeart(testPoint, center, baseRadius * 0.95);
           break;
       }
 
-      // 如果点在形状内，检查是否与已放置的词重叠
+      // 如果点在形状内，检查词语矩形的四个角是否也都在形状内
       if (inShape) {
         final x = testPoint.dx - painter.width / 2;
         final y = testPoint.dy - painter.height / 2;
         final rect = Rect.fromLTWH(x, y, painter.width, painter.height);
 
-        // 检查位置是否有效（不越界且不重叠）
-        if (_isValidPosition(rect, size, placed)) {
+        // 检查词语矩形的四个角是否都在形状内
+        final topLeft = Offset(rect.left, rect.top);
+        final topRight = Offset(rect.right, rect.top);
+        final bottomLeft = Offset(rect.left, rect.bottom);
+        final bottomRight = Offset(rect.right, rect.bottom);
+
+        bool allCornersInShape = _isPointInShape(topLeft, center, baseRadius, shape) &&
+                                  _isPointInShape(topRight, center, baseRadius, shape) &&
+                                  _isPointInShape(bottomLeft, center, baseRadius, shape) &&
+                                  _isPointInShape(bottomRight, center, baseRadius, shape);
+
+        // 检查位置是否有效（四个角都在形状内、不越界且不重叠）
+        if (allCornersInShape && _isValidPosition(rect, size, placed)) {
           return Offset(x, y);
         }
       }
@@ -259,9 +289,37 @@ class WordCloudPainter extends CustomPainter {
       // 沿螺旋线继续向外扫描
       angle += angleStep;
       r += radiusStep;
+
+      // 当螺旋半径超过形状最大范围时提前退出
+      if (r > baseRadius * 1.5) break;
     }
 
     return null;
+  }
+
+  /// 判断点是否在指定形状内
+  /// 统一的形状判断接口，用于检查词语矩形的四个角
+  bool _isPointInShape(Offset point, Offset center, double radius, LayoutAlgorithm shape) {
+    switch (shape) {
+      case LayoutAlgorithm.circle:
+        final distance = (point - center).distance;
+        return distance <= radius;
+      case LayoutAlgorithm.square:
+        final side = radius * 1.35;
+        final dx = (point.dx - center.dx).abs();
+        final dy = (point.dy - center.dy).abs();
+        return dx <= side / 2 && dy <= side / 2;
+      case LayoutAlgorithm.diamond:
+        return _isInDiamond(point, center, radius);
+      case LayoutAlgorithm.triangle:
+        return _isInTriangle(point, center, radius);
+      case LayoutAlgorithm.triangleRight:
+        return _isInTriangleRight(point, center, radius);
+      case LayoutAlgorithm.pentagon:
+        return isInPentagon(point, center, radius);
+      case LayoutAlgorithm.heart:
+        return _isInHeart(point, center, radius * 0.95);
+    }
   }
 
   /// 判断点是否在三角形内（尖朝上）
@@ -319,25 +377,19 @@ class WordCloudPainter extends CustomPainter {
   /// 判断点是否在心形内
   /// 使用心形方程：(x² + y² - 1)³ - x²y³ ≤ 0
   bool _isInHeart(Offset point, Offset center, double radius) {
-    // 归一化坐标
-    final dx = (point.dx - center.dx) / radius;
-    final dy = -(point.dy - center.dy) / radius;  // Y 轴翻转
+    // 归一化坐标，缩小判断区域确保词语不超出边界
+    final dx = (point.dx - center.dx) / (radius * 0.7);
+    final dy = -(point.dy - center.dy) / (radius * 0.7);
 
-    // 缩放参数，调整心形的宽度和高度
-    const scaleX = 1.45;
-    const scaleY = 1.45;
-    const verticalShift = 0.08;  // 垂直偏移，使心形居中
-
-    final x = dx * scaleX;
-    final y = (dy + verticalShift) * scaleY;
+    // 垂直偏移使心形居中
+    final x = dx;
+    final y = dy + 0.15;
 
     // 心形方程
     final term1 = pow(x * x + y * y - 1, 3);
     final term2 = x * x * y * y * y;
 
-    // 添加容差以增加心形内部区域
-    const tolerance = 0.02;
-    return term1 - term2 <= tolerance;
+    return term1 - term2 <= 0;
   }
 
   /// 检查位置是否有效
@@ -361,5 +413,10 @@ class WordCloudPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(WordCloudPainter oldDelegate) => true;
+  bool shouldRepaint(WordCloudPainter oldDelegate) {
+    return layout != oldDelegate.layout ||
+           seed != oldDelegate.seed ||
+           words.length != oldDelegate.words.length ||
+           style.showContour != oldDelegate.style.showContour;
+  }
 }
